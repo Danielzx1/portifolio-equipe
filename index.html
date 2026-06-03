@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio de Currículos | Equipe</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    
+    <main id="tela-inicial">
+        <header class="header-inicial">
+            <h1>Portfólio da Equipe</h1>
+            <p>Selecione um dos integrantes abaixo para visualizar o Currículo Lattes completo</p>
+        </header>
+        
+        <div class="cards-container" id="lista-membros"></div>
+    </main>
+
+    <main id="tela-curriculo" class="hidden">
+        <nav class="menu-navegacao">
+            <button id="btn-voltar">⬅ Voltar para a Equipe</button>
+            <button id="btn-editar" class="btn-acao">✏️ Editar Perfil</button>
+            <div class="links-ancora">
+                <a href="#cv-dados-pessoais">Dados</a>
+                <a href="#cv-formacao">Formação</a>
+                <a href="#cv-experiencia">Experiência</a>
+                <a href="#cv-cursos">Cursos</a>
+                <a href="#cv-habilidades">Habilidades</a>
+                <a href="#cv-contato-secao">Contato</a>
+            </div>
+        </nav>
+        
+        <article id="layout-curriculo">
+            <header class="cv-header">
+                <div class="cv-foto-container">
+                    <img id="cv-foto" src="https://via.placeholder.com/150" alt="Foto do Integrante">
+                </div>
+                <div class="cv-intro">
+                    <h1 id="cv-nome">Nome do Membro</h1>
+                    <h2 id="cv-objetivo">Objetivo Profissional</h2>
+                </div>
+            </header>
+            
+            <section id="cv-dados-pessoais" class="cv-secao">
+                <h3>Dados Pessoais</h3>
+                <div id="cv-lista-dados"></div>
+            </section>
+            
+            <section id="cv-formacao" class="cv-secao">
+                <h3>Formação Acadêmica</h3>
+                <p id="cv-texto-formacao">Descrição da formação...</p>
+            </section>
+            
+            <section id="cv-experiencia" class="cv-secao">
+                <h3>Experiências Profissionais</h3>
+                <ul id="cv-lista-experiencia"></ul>
+            </section>
+            
+            <section id="cv-cursos" class="cv-secao">
+                <h3>Cursos Complementares</h3>
+                <ul id="cv-lista-cursos"></ul>
+            </section>
+            
+            <section id="cv-habilidades" class="cv-secao">
+                <h3>Habilidades e Competências</h3>
+                <div class="tags-habilidades" id="cv-lista-habilidades"></div>
+            </section>
+
+            <section id="cv-contatos" class="cv-secao">
+                <h3>Contatos e Redes</h3>
+                <div class="redes-container">
+                    <p id="cv-texto-contato">E-mail / Telefone</p>
+                    <div id="cv-redes-links" class="social-links"></div>
+                </div>
+            </section>
+
+            <section id="cv-contato-secao" class="cv-secao form-secao">
+                <h3>Envie uma Mensagem</h3>
+                <form id="form-contato" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso! (Simulação)');">
+                    <div class="form-group">
+                        <label for="nome-form">Nome:</label>
+                        <input type="text" id="nome-form" required placeholder="Seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="email-form">E-mail:</label>
+                        <input type="email" id="email-form" required placeholder="seuemail@provedor.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="msg-form">Mensagem:</label>
+                        <textarea id="msg-form" rows="4" required placeholder="Digite sua mensagem aqui..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-enviar">Enviar Contato</button>
+                </form>
+            </section>
+        </article>
+    </main>
+
+    <div id="modal-edicao" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Currículo</h2>
+                <span id="btn-fechar-modal" class="close">&times;</span>
+            </div>
+<form id="form-edicao">
+                <div class="form-group">
+                    <label>Nome Completo:</label>
+                    <input type="text" id="edit-nome" required>
+                </div>
+                <div class="form-group">
+                    <label>Objetivo Profissional:</label>
+                    <input type="text" id="edit-objetivo" required>
+                </div>
+                <div class="form-group">
+                    <label>URL da Foto de Perfil:</label>
+                    <input type="url" id="edit-foto" placeholder="https://link-da-sua-foto.com/imagem.jpg">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="form-group">
+                        <label>E-mail:</label>
+                        <input type="email" id="edit-email">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone:</label>
+                        <input type="text" id="edit-telefone" placeholder="(XX) XXXXX-XXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>LinkedIn (URL):</label>
+                        <input type="url" id="edit-linkedin">
+                    </div>
+                    <div class="form-group">
+                        <label>GitHub (URL):</label>
+                        <input type="url" id="edit-github">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Dados Pessoais (Use ENTER para quebrar linha):</label>
+                    <textarea id="edit-dados" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Formação Acadêmica (Use ENTER para quebrar linha):</label>
+                    <textarea id="edit-formacao" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Experiência (Cada linha será um item com marcador):</label>
+                    <textarea id="edit-experiencia" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Cursos (Cada linha será um item com marcador):</label>
+                    <textarea id="edit-cursos" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Habilidades (Cada linha será um item com marcador):</label>
+                    <textarea id="edit-habilidades" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn-enviar">💾 Salvar Alterações</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden">✅ Alterações salvas com sucesso!</div>
+
+    <!-- Botão flutuante de login -->
+    <button id="btn-login-toggle" class="btn-login-flutuante" title="Fazer login para editar">🔒 Login</button>
+
+    <!-- Modal de Login -->
+    <div id="modal-login" class="modal hidden">
+        <div class="modal-content modal-login-content">
+            <div class="modal-header">
+                <h2>🔐 Área do Editor</h2>
+                <span id="btn-fechar-modal-login" class="close">&times;</span>
+            </div>
+            <p class="login-descricao">Faça login para editar o seu currículo.</p>
+            <form id="form-login">
+                <div class="form-group">
+                    <label>E-mail:</label>
+                    <input type="email" id="login-email" required placeholder="seu@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Senha:</label>
+                    <input type="password" id="login-senha" required placeholder="••••••••">
+                </div>
+                <p id="login-erro" class="login-erro"></p>
+                <button type="submit" id="btn-submeter-login" class="btn-enviar">🔓 Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="./js/main.js"></script>
+</body>
+</html>
