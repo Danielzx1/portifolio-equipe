@@ -69,7 +69,24 @@ class AppController {
             }
         };
 
-        // Botão de login/logout no canto da tela
+        // Formulário de contato com EmailJS
+        document.getElementById('form-contato').onsubmit = async (evento) => {
+            evento.preventDefault();
+            const btn = document.getElementById('btn-form-contato');
+            btn.disabled = true;
+            btn.innerText = 'Enviando...';
+            try {
+                await emailjs.sendForm('service_omzy4or', 'template_kqymzwv', evento.target);
+                this.ui.mostrarNotificacao('✅ Mensagem enviada com sucesso!');
+                evento.target.reset();
+            } catch (erro) {
+                console.error("Erro ao enviar email:", erro);
+                this.ui.mostrarNotificacao('❌ Erro ao enviar. Tente novamente.');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Enviar Contato';
+            }
+        };
         this.ui.btnLoginToggle.onclick = () => {
             if (this.usuarioLogado) {
                 this.banco.logout();

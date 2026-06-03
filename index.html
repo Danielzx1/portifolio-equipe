@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfólio de Currículos | Equipe</title>
     <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>emailjs.init("mi3ewNCPzBv4fVJB4");</script>
 </head>
 <body>
     
@@ -77,20 +79,20 @@
 
             <section id="cv-contato-secao" class="cv-secao form-secao">
                 <h3>Envie uma Mensagem</h3>
-                <form id="form-contato" onsubmit="event.preventDefault(); alert('Mensagem enviada com sucesso! (Simulação)');">
+                <form id="form-contato">
                     <div class="form-group">
                         <label for="nome-form">Nome:</label>
-                        <input type="text" id="nome-form" required placeholder="Seu nome">
+                        <input type="text" id="nome-form" name="name" required placeholder="Seu nome">
                     </div>
                     <div class="form-group">
                         <label for="email-form">E-mail:</label>
-                        <input type="email" id="email-form" required placeholder="seuemail@provedor.com">
+                        <input type="email" id="email-form" name="email" required placeholder="seuemail@provedor.com">
                     </div>
                     <div class="form-group">
                         <label for="msg-form">Mensagem:</label>
-                        <textarea id="msg-form" rows="4" required placeholder="Digite sua mensagem aqui..."></textarea>
+                        <textarea id="msg-form" name="message" rows="4" required placeholder="Digite sua mensagem aqui..."></textarea>
                     </div>
-                    <button type="submit" class="btn-enviar">Enviar Contato</button>
+                    <button type="submit" id="btn-form-contato" class="btn-enviar">Enviar Contato</button>
                 </form>
             </section>
         </article>
