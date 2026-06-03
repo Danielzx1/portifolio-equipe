@@ -30,6 +30,46 @@ export default class UIView {
         this.modalLogin = document.getElementById('modal-login');
         this.formLogin = document.getElementById('form-login');
         this.btnFecharModalLogin = document.getElementById('btn-fechar-modal-login');
+
+        // Upload de foto
+        this.inputFotoUpload = document.getElementById('input-foto-upload');
+        this.previewFoto = document.getElementById('preview-foto');
+        this.uploadStatus = document.getElementById('upload-status');
+        if (this.inputFotoUpload) this._configurarUpload();
+    }
+
+    _configurarUpload() {
+        this.inputFotoUpload.addEventListener('change', async (e) => {
+            const arquivo = e.target.files[0];
+            if (!arquivo) return;
+
+            this.uploadStatus.innerText = '⏳ Enviando foto...';
+            document.getElementById('label-upload').style.opacity = '0.5';
+
+            const formData = new FormData();
+            formData.append('file', arquivo);
+            formData.append('upload_preset', 'pkp2xt7q');
+
+            try {
+                const resposta = await fetch('https://api.cloudinary.com/v1_1/doytuiwkg/image/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const dados = await resposta.json();
+                const urlFoto = dados.secure_url;
+
+                // Atualiza o campo hidden e o preview
+                document.getElementById('edit-foto').value = urlFoto;
+                this.previewFoto.src = urlFoto;
+                this.previewFoto.classList.remove('hidden');
+                this.uploadStatus.innerText = '✅ Foto enviada!';
+            } catch (erro) {
+                this.uploadStatus.innerText = '❌ Erro no upload. Tente novamente.';
+                console.error(erro);
+            } finally {
+                document.getElementById('label-upload').style.opacity = '1';
+            }
+        });
     }
 
     alternarModalLogin(mostrar) {
@@ -123,7 +163,17 @@ preencherCurriculo(dados) {
         this.cvFoto.src = dados.foto || 'https://via.placeholder.com/150';
         
         // Aqui o innerText junto com o CSS pre-wrap faz a quebra de linha funcionar
-        this.cvDados.innerText = dados.dadosPessoais || '';
+        // Calcula e exibe idade automaticamente
+        let dadosPessoais = dados.dadosPessoais || '';
+        if (dados.dataNascimento) {
+            const nascimento = new Date(dados.dataNascimento);
+            const hoje = new Date();
+            let idade = hoje.getFullYear() - nascimento.getFullYear();
+            const mes = hoje.getMonth() - nascimento.getMonth();
+            if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) idade--;
+            dadosPessoais = `${idade} Anos\n` + dadosPessoais;
+        }
+        this.cvDados.innerText = dadosPessoais;
         this.cvFormacao.innerText = dados.formacao || '';
         
         // Renderiza os contatos como pílulas
@@ -145,6 +195,22 @@ preencherCurriculo(dados) {
         document.getElementById('edit-nome').value = dados.nome || '';
         document.getElementById('edit-objetivo').value = dados.objetivo || '';
         document.getElementById('edit-foto').value = dados.foto || '';
+
+        // Mostra preview da foto atual
+        const previewFoto = document.getElementById('preview-foto');
+        const uploadStatus = document.getElementById('upload-status');
+        const labelUpload = document.getElementById('label-upload');
+
+        if (previewFoto) {
+            if (dados.foto) {
+                previewFoto.src = dados.foto;
+                previewFoto.classList.remove('hidden');
+            } else {
+                previewFoto.classList.add('hidden');
+            }
+        }
+        if (uploadStatus) uploadStatus.innerText = '';
+        if (labelUpload) labelUpload.innerText = '📷 Trocar Foto';
         
         // Novos campos
         document.getElementById('edit-email').value = dados.email || '';
@@ -152,6 +218,7 @@ preencherCurriculo(dados) {
         document.getElementById('edit-linkedin').value = dados.linkedin || '';
         document.getElementById('edit-github').value = dados.github || '';
 
+        document.getElementById('edit-nascimento').value = dados.dataNascimento || '';
         document.getElementById('edit-dados').value = dados.dadosPessoais || '';
         document.getElementById('edit-formacao').value = dados.formacao || '';
         
@@ -172,6 +239,7 @@ preencherCurriculo(dados) {
             linkedin: document.getElementById('edit-linkedin').value,
             github: document.getElementById('edit-github').value,
 
+            dataNascimento: document.getElementById('edit-nascimento').value,
             dadosPessoais: document.getElementById('edit-dados').value,
             formacao: document.getElementById('edit-formacao').value,
             

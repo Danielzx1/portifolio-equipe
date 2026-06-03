@@ -114,8 +114,16 @@
                     <input type="text" id="edit-objetivo" required>
                 </div>
                 <div class="form-group">
-                    <label>URL da Foto de Perfil:</label>
-                    <input type="url" id="edit-foto" placeholder="https://link-da-sua-foto.com/imagem.jpg">
+                    <label>Foto de Perfil:</label>
+                    <div class="upload-container">
+                        <img id="preview-foto" src="" alt="Preview" class="preview-foto hidden">
+                        <label for="input-foto-upload" class="btn-upload" id="label-upload">
+                            📷 Escolher Foto
+                        </label>
+                        <input type="file" id="input-foto-upload" accept="image/*" style="display:none">
+                        <input type="hidden" id="edit-foto">
+                        <p id="upload-status" class="upload-status"></p>
+                    </div>
                 </div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
@@ -138,8 +146,12 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Data de Nascimento:</label>
+                    <input type="date" id="edit-nascimento">
+                </div>
+                <div class="form-group">
                     <label>Dados Pessoais (Use ENTER para quebrar linha):</label>
-                    <textarea id="edit-dados" rows="3"></textarea>
+                    <textarea id="edit-dados" rows="2" placeholder="Estado civil, cidade, etc..."></textarea>
                 </div>
                 <div class="form-group">
                     <label>Formação Acadêmica (Use ENTER para quebrar linha):</label>

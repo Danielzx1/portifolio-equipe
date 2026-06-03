@@ -98,6 +98,13 @@ main { width: 100%; max-width: 900px; }
     .links-ancora a { margin-left: 0; }
     #layout-curriculo { padding: 1.5rem; }
 }
+/* UPLOAD DE FOTO */
+.upload-container { display: flex; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+.preview-foto { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--cor-destaque); }
+.btn-upload { background-color: transparent; color: var(--cor-destaque); border: 1px solid var(--cor-destaque); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold; transition: 0.2s; }
+.btn-upload:hover { background-color: var(--cor-destaque); color: var(--bg-fundo); }
+.upload-status { font-size: 0.85rem; color: var(--texto-secundario); }
+
 /* ==========================================
    LOGIN FLUTUANTE
 ========================================== */
